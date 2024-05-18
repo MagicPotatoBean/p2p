@@ -32,14 +32,14 @@ fn client_connector(requests: Receiver<(TcpStream, SocketAddr)>) -> ! {
         match last_request {
             Some((ref mut stream_one, address_one)) => {
                 if stream_two
-                    .write_all(format!("{}", address_one).as_bytes())
+                    .write_all(format!("h{}", address_one).as_bytes())
                     .is_err()
                 {
                     println!("Failed to write to {address_two}, so {address_one} was sent an erroneous address.");
                     last_request = None;
                     continue;
                 } else if stream_one
-                    .write_all(format!("{}", address_two).as_bytes())
+                    .write_all(format!("c{}", address_two).as_bytes())
                     .is_err()
                 {
                     println!("Failed to write to {address_one}, dropping their request.");
